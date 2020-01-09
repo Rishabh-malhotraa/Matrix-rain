@@ -1,5 +1,6 @@
 //var symbol;
 var symbolSize = 24;
+var fadeInterval = 1.6 //for optimization!!!
 var streams = []; // global variable to hold our stream
 
 function setup() {
@@ -34,7 +35,7 @@ function SymbolConstructor(x, y, speed, first, opacity) {
   this.y = y;
   this.value;
   this.speed = speed;
-  this.opacity = opacity
+  this.opacity = opacity;
   this.switchInterval = round(random(2, 25));
   this.first = first; //for making the first symbol white!!!
 
@@ -69,12 +70,14 @@ function Stream() {
   this.speed = random(5, 9);
 
   this.generateSymbols = function (x, y) {
+    opacity = 255; //full opacity
     var first = ((round(random(0, 4)) == 1) ? true : false);
 
     for (var i = 0; i < this.totalSymbols; i++) {
-      symbol = new SymbolConstructor(x, y, this.speed, first);
+      symbol = new SymbolConstructor(x, y, this.speed, first, opacity);
       symbol.setToRandomSymbol(); //this obj has a function setToRandomSymbol which which is being executed!
       this.symbolArr.push(symbol);
+      opacity = opacity - (255 / this.totalSymbols) / fadeInterval;
       y = y - symbolSize; // so the next stream is not render above this one!
       first = false; //treu for i =1 and then fakse for everything else!!
     }
@@ -84,9 +87,9 @@ function Stream() {
     // + symbol is a placeholder Value for every index iteration in for each it could be xyz too!
     this.symbolArr.forEach(symbol => {
       if (symbol.first) {
-        fill(180, 255, 180);
+        fill(180, 255, 180, symbol.opacity);
       } else {
-        fill(0, 255, 150);
+        fill(0, 255, 150, symbol.opacity);
       }
       text(symbol.value, symbol.x, symbol.y);
       // function causing the motion you can also use this.rain since this refers to symbol only
