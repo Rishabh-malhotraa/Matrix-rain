@@ -1,3 +1,3 @@
 # MATRIX-rain
 
-<a href = https://rishgod.github.io/Matrix-rain/index.html> Click HERE </a>
+<a href = https://rishabh-malhtoraa.github.io/Matrix-rain/index.html> Click HERE </a>
